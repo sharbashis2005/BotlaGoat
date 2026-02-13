@@ -131,7 +131,6 @@
 <!-- SLIDES -->
 <div class="container" id="slidesContainer">
 
-    <!-- Slide 1 -->
     <div class="slide active">
         <div class="text">
             <h2>My Love ❤️</h2>
@@ -142,29 +141,26 @@
         </div>
     </div>
 
-    <!-- Slide 2 -->
     <div class="slide">
         <div class="text">
             <h2>Your Smile 💕</h2>
-            <p>Your smile makes me forget what I was saying...Every Single time!.</p>
+            <p>Your smile makes me forget what I was saying... Every single time.</p>
         </div>
         <div class="image">
             <img src="pic2.jpeg">
         </div>
     </div>
 
-    <!-- Slide 3 -->
     <div class="slide">
         <div class="text">
             <h2>Our Memories 🌸</h2>
-            <p>Every moment with you turns into a memory I never want to loose.</p>
+            <p>Every moment with you turns into a memory I never want to lose.</p>
         </div>
         <div class="image">
             <img src="pic3.jpeg">
         </div>
     </div>
 
-    <!-- Slide 4 -->
     <div class="slide">
         <div class="text">
             <h2>My Peace 🌷</h2>
@@ -175,18 +171,16 @@
         </div>
     </div>
 
-    <!-- Slide 5 -->
     <div class="slide">
         <div class="text">
             <h2>My Happiness 💞</h2>
-            <p>You are the favourite place for my ugly smile.</p>
+            <p>You are the favorite place for my ugly smile.</p>
         </div>
         <div class="image">
             <img src="pic5.jpeg">
         </div>
     </div>
 
-    <!-- FINAL LOVE SLIDE (Hidden Initially) -->
     <div class="center-slide" id="loveSlide">
         ❤️ I Love You ❤️
     </div>
@@ -200,13 +194,14 @@
 </div>
 
 <!-- MUSIC -->
-<audio id="bgMusic" loop>
+<audio id="bgMusic" loop preload="auto" playsinline>
     <source src="samjhawan.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 
 let currentSlide = 0;
+let musicStarted = false;
 
 function checkPassword() {
     const password = document.getElementById("passwordInput").value;
@@ -215,13 +210,28 @@ function checkPassword() {
         document.getElementById("passwordPage").style.display = "none";
         document.getElementById("slidesContainer").style.display = "block";
 
-        let music = document.getElementById("bgMusic");
-        music.play().catch(()=>{});
-
+        startMusic();
         createHearts();
     } else {
         document.getElementById("error").innerText = "Wrong Password 😢";
     }
+}
+
+function startMusic() {
+    const music = document.getElementById("bgMusic");
+    music.volume = 0;
+    music.play().then(() => {
+        musicStarted = true;
+        let fade = setInterval(() => {
+            if (music.volume < 0.7) {
+                music.volume += 0.05;
+            } else {
+                clearInterval(fade);
+            }
+        }, 200);
+    }).catch(() => {
+        console.log("Autoplay blocked");
+    });
 }
 
 function nextSlide() {
@@ -265,3 +275,4 @@ function createHearts() {
 
 </body>
 </html>
+
